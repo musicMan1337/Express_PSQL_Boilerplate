@@ -1,8 +1,8 @@
 const knex = require('knex');
 
 const app = require('./app');
-const logger = require('../src/libs/logger');
-const { PORT, DATABASE_URL } = require('../src/config/envConfig');
+const logger = require('./libs/logger');
+const { PORT, DATABASE_URL } = require('./config/envConfig');
 
 const db = knex({
   client: 'pg',
