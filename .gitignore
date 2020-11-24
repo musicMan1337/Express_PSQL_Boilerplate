@@ -1,14 +1,13 @@
+node_modules
 .env
-.env.test
-*.log
 
-.nyc_output/
-logs/
-node_modules/
+.nyc_output
+
+logs
+*.log
+*.logs
 
 docker-data
 
 # Custom stuff
 .shorten_folder_marker
-
-!db/
