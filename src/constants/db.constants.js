@@ -1,4 +1,4 @@
 export const TABLES = {
-  USER_TABLE: 'user',
+  USERS_TABLE: 'users',
   EXAMPLE_DATA_TABLE: 'example_data',
 };

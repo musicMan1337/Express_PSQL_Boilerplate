@@ -1,22 +1,43 @@
 const xss = require('xss');
 
+const {
+  TABLE_NAMES: { USERS_TABLE },
+} = require('../constants/db.constants');
+const {
+  USERS_CLIENT_RETURN,
+} = require('../constants/db-returns.constants');
+
 const SerializeService = {
-  serializeSomething(thing) {
-    return {
-      thing_name: xss(thing.thing_name),
-      description: xss(thing.description)
-    };
+  sanitizeObject(rawObject) {
+    const keyVals = Object.entries(rawObject);
+
+    keyVals.forEach(([key, value]) => (rawObject[key] = xss(value)));
+
+    return rawObject;
   },
 
-  serializeData(table, data) {
-    switch (table) {
-      case 'something':
-        return data.map(this.serializeSomething);
+  sanitizeAll(rawArray) {
+    return rawArray.map(this.serializeObject);
+  },
+
+  formatUser(rawUser) {
+    const keyVals = Object.entries(USERS_CLIENT_RETURN);
+
+    const user = {};
+    keyVals.forEach(([key, value]) => (user[key] = rawUser[value]));
+
+    return user;
+  },
+
+  formatAll(data, tableName) {
+    switch (tableName) {
+      case USERS_TABLE:
+        return data.map(this.formatUser);
 
       default:
-        return { message: 'Serialization failed' };
+        return null;
     }
-  }
+  },
 };
 
 module.exports = SerializeService;

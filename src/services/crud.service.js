@@ -1,27 +1,30 @@
 const CRUDService = {
   getAllData(db, table) {
-    return db(table).select('*');
+    return db(table);
   },
 
-  getById(db, table, id) {
-    return db(table).where({ id }).first();
+  getAllBySearch(db, table, search) {
+    return db(table).where({ ...search });
   },
 
-  deleteById(db, table, id) {
-    return db(table).where({ id }).del();
+  getBySearch(db, table, search) {
+    return db(table)
+      .where({ ...search })
+      .first();
   },
 
-  createEntry(db, table, newSong) {
-    return db(table).insert(newSong, '*');
+  createEntry(db, table, newData) {
+    return db(table).insert(newData, '*');
   },
 
-  updateEntry(db, table, id, newSong) {
-    return db(table).where({ id }).update(newSong, '*');
+  updateEntry(db, table, search, newData) {
+    return db(table)
+      .where({ ...search })
+      .update(newData, '*');
   },
 
-  // special case for user login
-  getByName(db, user_name) {
-    return db('users').where({ user_name }).first();
+  deleteEntry(db, table, colName, colVal) {
+    return db(table).where(colName, colVal).del('*');
   },
 };
 
